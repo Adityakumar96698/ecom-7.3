@@ -3,32 +3,26 @@ require('top.inc.php');
 
 $condition='';
 $condition1='';
-if($_SESSION['ADMIN_ROLE']==1)
-{
+if($_SESSION['ADMIN_ROLE']==1){
 	$condition=" and product.added_by='".$_SESSION['ADMIN_ID']."'";
 	$condition1=" and added_by='".$_SESSION['ADMIN_ID']."'";
 }
 
-if(isset($_GET['type']) && $_GET['type']!='')
-{
+if(isset($_GET['type']) && $_GET['type']!=''){
 	$type=get_safe_value($con,$_GET['type']);
 	if($type=='status'){
 		$operation=get_safe_value($con,$_GET['operation']);
 		$id=get_safe_value($con,$_GET['id']);
-		if($operation=='active')
-		{
+		if($operation=='active'){
 			$status='1';
-		}
-		else
-		{
+		}else{
 			$status='0';
 		}
 		$update_status_sql="update product set status='$status' $condition1 where id='$id'";
 		mysqli_query($con,$update_status_sql);
 	}
 	
-	if($type=='delete')
-	{
+	if($type=='delete'){
 		$id=get_safe_value($con,$_GET['id']);
 		$delete_sql="delete from product where id='$id' $condition1";
 		mysqli_query($con,$delete_sql);
